@@ -1,6 +1,6 @@
 {
 	"name": "@rbxts/better-builders",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "A set of DataType builder factories.",
 	"main": "out/init.lua",
 	"scripts": {
