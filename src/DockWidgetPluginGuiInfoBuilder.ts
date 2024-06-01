@@ -1,48 +1,55 @@
 export class DockWidgetPluginGuiInfoBuilder {
-	public initDockState: Enum.InitialDockState = Enum.InitialDockState.Right;
-	public initEnabled = false;
-	public overrideEnabledRestore = false;
-	public floatXSize = 0;
-	public floatYSize = 0;
-	public minWidth = 0;
-	public minHeight = 0;
+	initDockState: Enum.InitialDockState = Enum.InitialDockState.Right;
+	initEnabled = false;
+	overrideEnabledRestore = false;
+	floatXSize = 0;
+	floatYSize = 0;
+	minWidth = 0;
+	minHeight = 0;
 
-	public SetInitDockState(initDockState: Enum.InitialDockState) {
+	setInitDockState(initDockState: Enum.InitialDockState) {
 		this.initDockState = initDockState;
+
 		return;
 	}
 
-	public SetInitEnabled(initEnabled: boolean) {
+	setInitEnabled(initEnabled: boolean) {
 		this.initEnabled = initEnabled;
+
 		return;
 	}
 
-	public SetOverrideEnabledRestore(overrideEnabledRestore: boolean) {
+	setOverrideEnabledRestore(overrideEnabledRestore: boolean) {
 		this.overrideEnabledRestore = overrideEnabledRestore;
+
 		return;
 	}
 
-	public SetFloatXSize(floatXSize: number) {
+	setFloatXSize(floatXSize: number) {
 		this.floatXSize = floatXSize;
+
 		return;
 	}
 
-	public SetFloatYSize(floatYSize: number) {
+	setFloatYSize(floatYSize: number) {
 		this.floatYSize = floatYSize;
+
 		return;
 	}
 
-	public SetMinWidth(minWidth: number) {
+	setMinWidth(minWidth: number) {
 		this.minWidth = minWidth;
+
 		return;
 	}
 
-	public SetMinHeight(minHeight: number) {
+	setMinHeight(minHeight: number) {
 		this.minHeight = minHeight;
+
 		return;
 	}
 
-	public Build() {
+	build() {
 		return new DockWidgetPluginGuiInfo(
 			this.initDockState,
 			this.initEnabled,

@@ -8,11 +8,13 @@ export class TweenInfoBuilder {
 
 	public SetEasingDirection(easingDirection: Enum.EasingDirection) {
 		this.easingDirection = easingDirection;
+
 		return this;
 	}
 
 	public SetTime(time: number) {
 		this.time = time;
+
 		return this;
 	}
 

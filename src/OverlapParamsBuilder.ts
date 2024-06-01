@@ -1,31 +1,21 @@
 export class OverlapParamsBuilder {
 	private filterDescendantsInstances = new Array<Instance>();
-	private filterType: Enum.RaycastFilterType | undefined = undefined;
-	private maxParts: number | undefined = undefined;
-	private collisionGroup: string | undefined = undefined;
-	private respectCanCollide: boolean | undefined = undefined;
-	private bruteForceAllSlow: boolean | undefined = undefined;
+	private filterType?: Enum.RaycastFilterType;
+	private maxParts?: number;
+	private collisionGroup?: string;
+	private respectCanCollide?: boolean;
+	private bruteForceAllSlow?: boolean;
 
-	constructor() {}
-
-	setFilter(filterDescendantsInstances: Instance[], filterType?: Enum.RaycastFilterType) {
-		this.filterDescendantsInstances = filterDescendantsInstances;
+	setFilter(filterDescendantsInstances: Instance | Instance[], filterType?: Enum.RaycastFilterType) {
+		if (typeIs(filterDescendantsInstances, "Instance")) {
+			this.filterDescendantsInstances = [filterDescendantsInstances];
+		} else {
+			this.filterDescendantsInstances = filterDescendantsInstances;
+		}
 
 		if (filterType) {
 			this.filterType = filterType;
 		}
-
-		return this;
-	}
-
-	setMaxParts(maxParts: number) {
-		this.maxParts = maxParts;
-
-		return this;
-	}
-
-	setCollisionGroup(collisionGroup: string) {
-		this.collisionGroup = collisionGroup;
 
 		return this;
 	}
@@ -38,6 +28,28 @@ export class OverlapParamsBuilder {
 				this.filterDescendantsInstances.push(value);
 			});
 		}
+
+		return this;
+	}
+
+	removeFromFilter(instances: Instance | Instance[]) {
+		const filterPredicate = typeIs(instances, "Instance")
+			? (value: Instance) => value !== instances
+			: (value: Instance) => !instances.includes(value);
+
+		this.filterDescendantsInstances = this.filterDescendantsInstances.filter(filterPredicate);
+
+		return this;
+	}
+
+	setMaxParts(maxParts: number) {
+		this.maxParts = maxParts;
+
+		return this;
+	}
+
+	setCollisionGroup(collisionGroup: string) {
+		this.collisionGroup = collisionGroup;
 
 		return this;
 	}
@@ -58,18 +70,23 @@ export class OverlapParamsBuilder {
 		const params = new OverlapParams();
 
 		params.FilterDescendantsInstances = this.filterDescendantsInstances;
+
 		if (this.filterType) {
 			params.FilterType = this.filterType;
 		}
+
 		if (this.collisionGroup !== undefined) {
 			params.CollisionGroup = this.collisionGroup;
 		}
+
 		if (this.maxParts !== undefined) {
 			params.MaxParts = this.maxParts;
 		}
+
 		if (this.respectCanCollide !== undefined) {
 			params.RespectCanCollide = this.respectCanCollide;
 		}
+
 		if (this.bruteForceAllSlow !== undefined) {
 			params.BruteForceAllSlow = this.bruteForceAllSlow;
 		}
