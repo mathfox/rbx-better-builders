@@ -21,9 +21,9 @@ export type TeleportOptionsVariant<T extends TypeNames<typeof TeleportOptionsVar
 
 class TeleportOptionsBuilderFinal {
 	private teleportData?: object;
-	private teleportOptionsVariant: TeleportOptionsVariant;
+	private teleportOptionsVariant?: TeleportOptionsVariant;
 
-	constructor(variant: TeleportOptionsVariant) {
+	constructor(variant?: TeleportOptionsVariant) {
 		this.teleportOptionsVariant = variant;
 	}
 
@@ -40,22 +40,30 @@ class TeleportOptionsBuilderFinal {
 			teleportOptions.SetTeleportData(this.teleportData);
 		}
 
-		match(this.teleportOptionsVariant, {
-			ReservedServerAccessCode: ({ code }) => {
-				teleportOptions.ReservedServerAccessCode = code;
-			},
-			ServerInstanceId: ({ serverInstanceId }) => {
-				teleportOptions.ServerInstanceId = serverInstanceId;
-			},
-			ShouldReserveServer: ({ shouldReserveServer }) => {
-				teleportOptions.ShouldReserveServer = shouldReserveServer;
-			},
-		});
+		if (this.teleportOptionsVariant) {
+			match(this.teleportOptionsVariant, {
+				ReservedServerAccessCode: ({ code }) => {
+					teleportOptions.ReservedServerAccessCode = code;
+				},
+				ServerInstanceId: ({ serverInstanceId }) => {
+					teleportOptions.ServerInstanceId = serverInstanceId;
+				},
+				ShouldReserveServer: ({ shouldReserveServer }) => {
+					teleportOptions.ShouldReserveServer = shouldReserveServer;
+				},
+			});
+		}
 
 		return teleportOptions;
 	}
 }
 
-const builder = new TeleportOptionsBuilder().setTeleportOptionsVariant(
-	TeleportOptionsVariant.ReservedServerAccessCode({ code: "test" }),
-);
+export class TeleportOptionsBuilder extends TeleportOptionsBuilderFinal {
+	constructor() {
+		super();
+	}
+
+	setTeleportOptionsVariant(variant: TeleportOptionsVariant) {
+		return new TeleportOptionsBuilderFinal(variant);
+	}
+}
