@@ -45,9 +45,11 @@ class TeleportOptionsBuilderFinal {
 				ReservedServerAccessCode: ({ code }) => {
 					teleportOptions.ReservedServerAccessCode = code;
 				},
+
 				ServerInstanceId: ({ serverInstanceId }) => {
 					teleportOptions.ServerInstanceId = serverInstanceId;
 				},
+
 				ShouldReserveServer: ({ shouldReserveServer }) => {
 					teleportOptions.ShouldReserveServer = shouldReserveServer;
 				},

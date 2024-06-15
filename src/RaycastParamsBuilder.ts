@@ -1,3 +1,7 @@
+function test(action: Workspace): void;
+
+function test(value: string | Workspace) {}
+
 export class RaycastParamsBuilder {
 	private filterDescendantsInstances = new Array<Instance>();
 	private filterType?: Enum.RaycastFilterType;
@@ -5,6 +9,10 @@ export class RaycastParamsBuilder {
 	private collisionGroup?: string;
 	private respectCanCollide?: boolean;
 	private bruteForceAllSlow?: boolean;
+
+	setFilter(filteredInstance: Instance, filterType?: Enum.RaycastFilterType): RaycastParamsBuilder;
+
+	setFilter(filterDescendantsInstances: Instance[], filterType?: Enum.RaycastFilterType): RaycastParamsBuilder;
 
 	setFilter(filterDescendantsInstances: Instance | Instance[], filterType?: Enum.RaycastFilterType) {
 		if (typeIs(filterDescendantsInstances, "Instance")) {
@@ -20,6 +28,10 @@ export class RaycastParamsBuilder {
 		return this;
 	}
 
+	addToFilter(instance: Instance): RaycastParamsBuilder;
+
+	addToFilter(instances: Instance[]): RaycastParamsBuilder;
+
 	addToFilter(instances: Instance | Instance[]) {
 		if (typeIs(instances, "Instance")) {
 			this.filterDescendantsInstances.push(instances);
@@ -31,6 +43,10 @@ export class RaycastParamsBuilder {
 
 		return this;
 	}
+
+	removeFromFilter(instance: Instance): RaycastParamsBuilder;
+
+	removeFromFilter(instances: Instance[]): RaycastParamsBuilder;
 
 	removeFromFilter(instances: Instance | Instance[]) {
 		const filterPredicate = typeIs(instances, "Instance")

@@ -6,6 +6,10 @@ export class OverlapParamsBuilder {
 	private respectCanCollide?: boolean;
 	private bruteForceAllSlow?: boolean;
 
+	setFilter(filteredInstance: Instance, filterType?: Enum.RaycastFilterType): OverlapParamsBuilder;
+
+	setFilter(filterDescendantsInstances: Instance[], filterType?: Enum.RaycastFilterType): OverlapParamsBuilder;
+
 	setFilter(filterDescendantsInstances: Instance | Instance[], filterType?: Enum.RaycastFilterType) {
 		if (typeIs(filterDescendantsInstances, "Instance")) {
 			this.filterDescendantsInstances = [filterDescendantsInstances];
@@ -20,6 +24,10 @@ export class OverlapParamsBuilder {
 		return this;
 	}
 
+	addToFilter(instance: Instance): OverlapParamsBuilder;
+
+	addToFilter(instances: Instance[]): OverlapParamsBuilder;
+
 	addToFilter(instances: Instance | Instance[]) {
 		if (typeIs(instances, "Instance")) {
 			this.filterDescendantsInstances.push(instances);
@@ -31,6 +39,10 @@ export class OverlapParamsBuilder {
 
 		return this;
 	}
+
+	removeFromFilter(instance: Instance): OverlapParamsBuilder;
+
+	removeFromFilter(instances: Instance[]): OverlapParamsBuilder;
 
 	removeFromFilter(instances: Instance | Instance[]) {
 		const filterPredicate = typeIs(instances, "Instance")
