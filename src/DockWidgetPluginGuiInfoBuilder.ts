@@ -1,52 +1,52 @@
 export class DockWidgetPluginGuiInfoBuilder {
-	initDockState: Enum.InitialDockState = Enum.InitialDockState.Right;
-	initEnabled = false;
-	overrideEnabledRestore = false;
-	floatXSize = 0;
-	floatYSize = 0;
-	minWidth = 0;
-	minHeight = 0;
+	private initDockState: Enum.InitialDockState = Enum.InitialDockState.Right;
+	private initEnabled = false;
+	private overrideEnabledRestore = false;
+	private floatXSize = 0;
+	private floatYSize = 0;
+	private minWidth = 0;
+	private minHeight = 0;
 
 	setInitDockState(initDockState: Enum.InitialDockState) {
 		this.initDockState = initDockState;
 
-		return;
+		return this;
 	}
 
 	setInitEnabled(initEnabled: boolean) {
 		this.initEnabled = initEnabled;
 
-		return;
+		return this;
 	}
 
 	setOverrideEnabledRestore(overrideEnabledRestore: boolean) {
 		this.overrideEnabledRestore = overrideEnabledRestore;
 
-		return;
+		return this;
 	}
 
 	setFloatXSize(floatXSize: number) {
 		this.floatXSize = floatXSize;
 
-		return;
+		return this;
 	}
 
 	setFloatYSize(floatYSize: number) {
 		this.floatYSize = floatYSize;
 
-		return;
+		return this;
 	}
 
 	setMinWidth(minWidth: number) {
 		this.minWidth = minWidth;
 
-		return;
+		return this;
 	}
 
 	setMinHeight(minHeight: number) {
 		this.minHeight = minHeight;
 
-		return;
+		return this;
 	}
 
 	build() {
