@@ -10,11 +10,20 @@ export class RaycastParamsBuilder {
 	private respectCanCollide?: boolean;
 	private bruteForceAllSlow?: boolean;
 
-	setFilter(filteredInstance: Instance, filterType?: Enum.RaycastFilterType): RaycastParamsBuilder;
+	setFilter(
+		filteredInstance: Instance,
+		filterType?: Enum.RaycastFilterType,
+	): RaycastParamsBuilder;
 
-	setFilter(filterDescendantsInstances: Instance[], filterType?: Enum.RaycastFilterType): RaycastParamsBuilder;
+	setFilter(
+		filterDescendantsInstances: Instance[],
+		filterType?: Enum.RaycastFilterType,
+	): RaycastParamsBuilder;
 
-	setFilter(filterDescendantsInstances: Instance | Instance[], filterType?: Enum.RaycastFilterType) {
+	setFilter(
+		filterDescendantsInstances: Instance | Instance[],
+		filterType?: Enum.RaycastFilterType,
+	) {
 		if (typeIs(filterDescendantsInstances, "Instance")) {
 			this.filterDescendantsInstances = [filterDescendantsInstances];
 		} else {
@@ -36,9 +45,9 @@ export class RaycastParamsBuilder {
 		if (typeIs(instances, "Instance")) {
 			this.filterDescendantsInstances.push(instances);
 		} else {
-			instances.forEach((value) => {
+			for (const value of instances) {
 				this.filterDescendantsInstances.push(value);
-			});
+			}
 		}
 
 		return this;
@@ -53,7 +62,8 @@ export class RaycastParamsBuilder {
 			? (value: Instance) => value !== instances
 			: (value: Instance) => !instances.includes(value);
 
-		this.filterDescendantsInstances = this.filterDescendantsInstances.filter(filterPredicate);
+		this.filterDescendantsInstances =
+			this.filterDescendantsInstances.filter(filterPredicate);
 
 		return this;
 	}

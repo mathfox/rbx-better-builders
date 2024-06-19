@@ -1,4 +1,9 @@
-import variantModule, { TypeNames, VariantOf, fields, match } from "@rbxts/variant";
+import variantModule, {
+	type TypeNames,
+	type VariantOf,
+	fields,
+	match,
+} from "@rbxts/variant";
 
 export const TeleportOptionsVariant = variantModule({
 	ReservedServerAccessCode: fields<{
@@ -14,10 +19,9 @@ export const TeleportOptionsVariant = variantModule({
 	}>(),
 });
 
-export type TeleportOptionsVariant<T extends TypeNames<typeof TeleportOptionsVariant> = undefined> = VariantOf<
-	typeof TeleportOptionsVariant,
-	T
->;
+export type TeleportOptionsVariant<
+	T extends TypeNames<typeof TeleportOptionsVariant> = undefined,
+> = VariantOf<typeof TeleportOptionsVariant, T>;
 
 class TeleportOptionsBuilderFinal {
 	private teleportData?: object;
@@ -61,10 +65,6 @@ class TeleportOptionsBuilderFinal {
 }
 
 export class TeleportOptionsBuilder extends TeleportOptionsBuilderFinal {
-	constructor() {
-		super();
-	}
-
 	setTeleportOptionsVariant(variant: TeleportOptionsVariant) {
 		return new TeleportOptionsBuilderFinal(variant);
 	}
