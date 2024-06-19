@@ -37,7 +37,7 @@
 		"@biomejs/biome": "1.8.1",
 		"@rbxts/compiler-types": "^2.3.0-types.1",
 		"@rbxts/services": "^1.5.4",
-		"@rbxts/types": "^1.0.778",
+		"@rbxts/types": "^1.0.782",
 		"@rbxts/variant": "^1.0.2",
 		"roblox-ts": "^2.3.0",
 		"typescript": "^5.4.5"
