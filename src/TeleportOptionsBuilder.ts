@@ -1,11 +1,6 @@
-import variantModule, {
-	type TypeNames,
-	type VariantOf,
-	fields,
-	match,
-} from "@rbxts/variant";
+import { TypeNames, VariantOf, fields, match, variant } from "@rbxts/better-variant";
 
-export const TeleportOptionsVariant = variantModule({
+export const TeleportOptionsVariant = variant({
 	ReservedServerAccessCode: fields<{
 		code: string;
 	}>(),
