@@ -1,6 +1,6 @@
 {
 	"name": "@rbxts/better-builders",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"description": "A set of DataType builder factories.",
 	"main": "out/init.lua",
 	"scripts": {
@@ -28,12 +28,10 @@
 		"access": "public"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "1.8.1",
 		"@rbxts/compiler-types": "^2.3.0-types.1",
-		"@rbxts/services": "^1.5.4",
-		"@rbxts/types": "^1.0.782",
-		"@rbxts/variant": "^1.0.2",
+		"@rbxts/types": "1.0.787",
 		"roblox-ts": "^2.3.0",
-		"typescript": "^5.4.5"
+		"typescript": "5.5.2",
+		"@rbxts/better-variant": "0.0.5"
 	}
 }

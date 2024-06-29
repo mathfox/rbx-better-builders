@@ -1,7 +1,3 @@
-function test(action: Workspace): void;
-
-function test(value: string | Workspace) {}
-
 export class RaycastParamsBuilder {
 	private filterDescendantsInstances = new Array<Instance>();
 	private filterType?: Enum.RaycastFilterType;
