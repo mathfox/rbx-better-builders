@@ -1,4 +1,10 @@
-import { TypeNames, VariantOf, fields, match, variant } from "@rbxts/better-variant";
+import {
+	type TypeNames,
+	type VariantOf,
+	fields,
+	match,
+	variant,
+} from "@rbxts/better-variant";
 
 export const TeleportOptionsVariant = variant({
 	ReservedServerAccessCode: fields<{
