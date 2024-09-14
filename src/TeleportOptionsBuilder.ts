@@ -1,72 +1,96 @@
-import {
-	type TypeNames,
-	type VariantOf,
-	fields,
-	match,
-	variant,
-} from "@rbxts/better-variant";
+enum TeleportOptionsFlag {
+	ReservedServerAccessCode = 1 << 0,
+	ServerInstanceId = 1 << 1,
+	ShouldReserveServer = 1 << 2,
+}
 
-export const TeleportOptionsVariant = variant({
-	ReservedServerAccessCode: fields<{
-		code: string;
-	}>(),
+export class TeleportOptionsBuilder {
+	private flags: TeleportOptionsFlag = 0 as TeleportOptionsFlag;
 
-	ServerInstanceId: fields<{
-		serverInstanceId: string;
-	}>(),
-
-	ShouldReserveServer: fields<{
-		shouldReserveServer: boolean;
-	}>(),
-});
-
-export type TeleportOptionsVariant<
-	T extends TypeNames<typeof TeleportOptionsVariant> = undefined,
-> = VariantOf<typeof TeleportOptionsVariant, T>;
-
-class TeleportOptionsBuilderFinal {
 	private teleportData?: object;
-	private teleportOptionsVariant?: TeleportOptionsVariant;
+	private reservedServerAccessCode?: string;
+	private serverInstanceId?: string;
+	private shouldReserveServer?: boolean;
 
-	constructor(variant?: TeleportOptionsVariant) {
-		this.teleportOptionsVariant = variant;
+	setReservedServerAccessCode(
+		code: string,
+	): Omit<
+		TeleportOptionsBuilder,
+		"setShouldReserveServer" | "setServerInstanceId"
+	> {
+		assert(
+			(this.flags & TeleportOptionsFlag.ShouldReserveServer) === 0,
+			"Cannot contain 'ShouldReserveServer'",
+		);
+		assert(
+			(this.flags & TeleportOptionsFlag.ServerInstanceId) === 0,
+			"Cannot contain 'ServerInstanceId'",
+		);
+
+		this.reservedServerAccessCode = code;
+		this.flags |= TeleportOptionsFlag.ReservedServerAccessCode;
+		return this;
+	}
+
+	setServerInstanceId(
+		serverInstanceId: string,
+	): Omit<
+		TeleportOptionsBuilder,
+		"setReservedServerAccessCode" | "setShouldReserveServer"
+	> {
+		assert(
+			(this.flags & TeleportOptionsFlag.ReservedServerAccessCode) === 0,
+			"Cannot contain 'ReservedServerAccessCode'",
+		);
+		assert(
+			(this.flags & TeleportOptionsFlag.ShouldReserveServer) === 0,
+			"Cannot contain 'ShouldReserveServer'",
+		);
+
+		this.serverInstanceId = serverInstanceId;
+		this.flags |= TeleportOptionsFlag.ServerInstanceId;
+		return this;
+	}
+
+	setShouldReserveServer(
+		shouldReserveServer: boolean,
+	): Omit<
+		TeleportOptionsBuilder,
+		"setReservedServerAccessCode" | "setServerInstanceId"
+	> {
+		assert(
+			(this.flags & TeleportOptionsFlag.ReservedServerAccessCode) === 0,
+			"Cannot contain 'ReservedServerAccessCode'",
+		);
+		assert(
+			(this.flags & TeleportOptionsFlag.ServerInstanceId) === 0,
+			"Cannot contain 'ServerInstanceId'",
+		);
+
+		this.shouldReserveServer = shouldReserveServer;
+		this.flags |= TeleportOptionsFlag.ShouldReserveServer;
+		return this;
 	}
 
 	setTeleportData<T extends { [P in string]: unknown }>(value: T) {
 		this.teleportData = value;
-
 		return this;
 	}
 
 	build() {
 		const teleportOptions = new Instance("TeleportOptions");
 
-		if (this.teleportData) {
-			teleportOptions.SetTeleportData(this.teleportData);
-		}
+		if (this.teleportData) teleportOptions.SetTeleportData(this.teleportData);
 
-		if (this.teleportOptionsVariant) {
-			match(this.teleportOptionsVariant, {
-				ReservedServerAccessCode: ({ code }) => {
-					teleportOptions.ReservedServerAccessCode = code;
-				},
+		if (this.shouldReserveServer)
+			teleportOptions.ShouldReserveServer = this.shouldReserveServer;
 
-				ServerInstanceId: ({ serverInstanceId }) => {
-					teleportOptions.ServerInstanceId = serverInstanceId;
-				},
+		if (this.serverInstanceId !== undefined)
+			teleportOptions.ServerInstanceId = this.serverInstanceId;
 
-				ShouldReserveServer: ({ shouldReserveServer }) => {
-					teleportOptions.ShouldReserveServer = shouldReserveServer;
-				},
-			});
-		}
+		if (this.reservedServerAccessCode !== undefined)
+			teleportOptions.ReservedServerAccessCode = this.reservedServerAccessCode;
 
 		return teleportOptions;
-	}
-}
-
-export class TeleportOptionsBuilder extends TeleportOptionsBuilderFinal {
-	setTeleportOptionsVariant(variant: TeleportOptionsVariant) {
-		return new TeleportOptionsBuilderFinal(variant);
 	}
 }
